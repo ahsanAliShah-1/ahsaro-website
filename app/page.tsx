@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -44,30 +43,38 @@ export default function Home() {
         </nav>
       )}
 
-      <section className="relative overflow-hidden px-6 py-24 md:px-12 md:py-36">
-        <div className="pointer-events-none absolute -right-24 top-10 h-80 w-80 rounded-full bg-[#B89B68]/10 blur-[100px]" />
+      <section className="relative isolate overflow-hidden px-6 py-24 md:px-12 md:py-36">
+        <div
+          aria-hidden="true"
+          className="ahsaro-glow pointer-events-none absolute -right-[15%] -top-[10%] -z-10 aspect-square w-[min(90vw,820px)]"
+        />
 
-        <p className="mb-8 text-xs tracking-[0.3em] text-[#B89B68]">
+        <p className="ahsaro-reveal ahsaro-reveal-delay-1 mb-8 text-xs tracking-[0.3em] text-[#B89B68]">
           INDEPENDENT DIGITAL STUDIO
         </p>
 
-        <h1 className="max-w-5xl text-5xl font-light leading-[1.1] tracking-tight md:text-7xl lg:text-8xl">
-          Digital experiences,
-          <br />
-          <span className="font-serif italic text-[#B89B68]">
-            elevated.
+        <h1 className="max-w-5xl text-[2.75rem] font-light leading-[1.1] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+          <span className="ahsaro-line">
+            <span className="ahsaro-line-inner ahsaro-line-delay-1">
+              Digital experiences,
+            </span>
+          </span>
+          <span className="ahsaro-line">
+            <span className="ahsaro-line-inner ahsaro-line-delay-2 font-serif italic text-[#B89B68]">
+              elevated.
+            </span>
           </span>
         </h1>
 
         <div className="mt-10 flex max-w-3xl flex-col justify-between gap-8 md:flex-row md:items-end">
-          <p className="max-w-md text-base leading-7 text-white/60">
+          <p className="ahsaro-reveal ahsaro-reveal-delay-2 max-w-md text-base leading-7 text-white/60">
             We create thoughtful websites and digital experiences that help
             ambitious businesses stand apart.
           </p>
 
           <a
             href="mailto:hello@ahsaro.com"
-            className="inline-flex w-fit items-center gap-5 border-b border-[#B89B68] pb-3 text-sm hover:text-[#B89B68]"
+            className="ahsaro-reveal ahsaro-reveal-delay-3 inline-flex w-fit items-center gap-5 border-b border-[#B89B68] pb-3 text-sm hover:text-[#B89B68]"
           >
             START A PROJECT <span className="text-[#B89B68]">↗</span>
           </a>

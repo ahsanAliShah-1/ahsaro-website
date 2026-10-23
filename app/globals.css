@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* AHSARO palette */
+  --background: #111111; /* obsidian */
+  --foreground: #f5f1e8; /* warm ivory */
+  --gold: #b89b68; /* muted gold */
+  --surface: #1b1b19; /* secondary dark surface */
+  --border: rgba(245, 241, 232, 0.1); /* translucent ivory */
+
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -10,17 +16,119 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-cormorant);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+}
+
+/* AHSARO — cinematic editorial motion */
+
+@keyframes ahsaro-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headline lines slide up from below an overflow mask */
+@keyframes ahsaro-mask-up {
+  from {
+    transform: translateY(110%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Very slow, understated drift of the hero glow */
+@keyframes ahsaro-glow-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate3d(-24px, 18px, 0) scale(1.06);
+    opacity: 1;
+  }
+}
+
+/* Fade-up reveal (eyebrow, paragraph, CTA).
+   Sequence: eyebrow -> line 1 -> line 2 -> paragraph -> CTA */
+.ahsaro-reveal {
+  animation: ahsaro-fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ahsaro-reveal-delay-1 {
+  animation-delay: 100ms;
+}
+
+.ahsaro-reveal-delay-2 {
+  animation-delay: 650ms;
+}
+
+.ahsaro-reveal-delay-3 {
+  animation-delay: 800ms;
+}
+
+/* Masked headline lines.
+   The small bottom padding / negative margin pair stops descenders
+   and italic overhangs from being clipped without shifting layout. */
+.ahsaro-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.04em 0.08em 0.16em 0;
+  margin: -0.04em -0.08em -0.16em 0;
+}
+
+.ahsaro-line-inner {
+  display: block;
+  animation: ahsaro-mask-up 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ahsaro-line-delay-1 {
+  animation-delay: 250ms;
+}
+
+.ahsaro-line-delay-2 {
+  animation-delay: 400ms;
+}
+
+/* Atmospheric gold glow: a plain radial gradient (no blur filter),
+   faint at its peak so text contrast is never affected. */
+.ahsaro-glow {
+  background: radial-gradient(
+    closest-side,
+    rgba(184, 155, 104, 0.16) 0%,
+    rgba(184, 155, 104, 0.07) 45%,
+    rgba(184, 155, 104, 0) 100%
+  );
+  opacity: 0.85;
+  animation: ahsaro-glow-drift 26s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ahsaro-reveal,
+  .ahsaro-reveal-delay-1,
+  .ahsaro-reveal-delay-2,
+  .ahsaro-reveal-delay-3,
+  .ahsaro-line-inner,
+  .ahsaro-line-delay-1,
+  .ahsaro-line-delay-2,
+  .ahsaro-glow {
+    animation: none !important;
+  }
 }

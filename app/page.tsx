@@ -1,83 +1,69 @@
-"use client";
+import SiteHeader from "./components/SiteHeader";
+import MagneticButton from "./components/MagneticButton";
+import Parallax from "./components/Parallax";
+import { Reveal, RevealLines } from "./components/Reveal";
 
-import { useState } from "react";
+const services = [
+  {
+    number: "01",
+    title: "Website Design",
+    description: "Clear layouts and distinctive visual direction for your brand.",
+  },
+  {
+    number: "02",
+    title: "Web Development",
+    description: "Responsive, modern websites designed for real people.",
+  },
+  {
+    number: "03",
+    title: "Website Care",
+    description: "Ongoing improvements, maintenance and support.",
+  },
+];
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <main className="min-h-screen bg-[#111111] text-[#F5F1E8]">
-      <header className="flex items-center justify-between border-b border-white/10 px-6 py-5 md:px-12">
-        <a href="#" className="text-2xl font-semibold tracking-[0.2em]">
-          AHSARO<span className="text-[#B89B68]">.</span>
-        </a>
+      <SiteHeader />
 
-        <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
-          <a href="#services" className="hover:text-[#B89B68]">Services</a>
-          <a href="#work" className="hover:text-[#B89B68]">Our work</a>
-          <a href="#about" className="hover:text-[#B89B68]">About</a>
-        </nav>
-
-        <a
-          href="mailto:hello@ahsaro.com"
-          className="hidden border border-[#B89B68]/60 px-5 py-3 text-xs tracking-wider hover:bg-[#B89B68] hover:text-black md:block"
+      <section className="relative isolate overflow-hidden px-6 pb-24 pt-32 md:px-12 md:pb-36 md:pt-48">
+        <Parallax
+          speed={0.18}
+          className="pointer-events-none absolute -right-[15%] -top-[10%] -z-10 aspect-square w-[min(90vw,820px)]"
         >
-          LET&apos;S TALK ↗
-        </a>
-
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="text-sm md:hidden"
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? "CLOSE" : "MENU"}
-        </button>
-      </header>
-
-      {menuOpen && (
-        <nav className="flex flex-col gap-5 border-b border-white/10 px-6 py-6 text-sm md:hidden">
-          <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
-          <a href="#work" onClick={() => setMenuOpen(false)}>Our work</a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
-          <a href="mailto:hello@ahsaro.com">Contact us ↗</a>
-        </nav>
-      )}
-
-      <section className="relative isolate overflow-hidden px-6 py-24 md:px-12 md:py-36">
-        <div
-          aria-hidden="true"
-          className="ahsaro-glow pointer-events-none absolute -right-[15%] -top-[10%] -z-10 aspect-square w-[min(90vw,820px)]"
-        />
+          <div aria-hidden="true" className="ahsaro-glow h-full w-full" />
+        </Parallax>
 
         <p className="ahsaro-reveal ahsaro-reveal-delay-1 mb-8 text-xs tracking-[0.3em] text-[#B89B68]">
           INDEPENDENT DIGITAL STUDIO
         </p>
 
-        <h1 className="max-w-5xl text-[2.75rem] font-light leading-[1.1] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+        <h1 className="font-light leading-[1.1] tracking-tight [font-size:clamp(2.75rem,8vw,8rem)]">
           <span className="ahsaro-line">
             <span className="ahsaro-line-inner ahsaro-line-delay-1">
-              Digital experiences,
+              Where Visions
             </span>
           </span>
           <span className="ahsaro-line">
-            <span className="ahsaro-line-inner ahsaro-line-delay-2 font-serif italic text-[#B89B68]">
-              elevated.
+            <span className="ahsaro-line-inner ahsaro-line-delay-2 ahsaro-accent">
+               Become Digital
             </span>
           </span>
         </h1>
 
-        <div className="mt-10 flex max-w-3xl flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div className="mt-12 flex max-w-3xl flex-col justify-between gap-8 md:flex-row md:items-end">
           <p className="ahsaro-reveal ahsaro-reveal-delay-2 max-w-md text-base leading-7 text-white/60">
             We create thoughtful websites and digital experiences that help
             ambitious businesses stand apart.
           </p>
 
-          <a
+          <MagneticButton
             href="mailto:hello@ahsaro.com"
-            className="ahsaro-reveal ahsaro-reveal-delay-3 inline-flex w-fit items-center gap-5 border-b border-[#B89B68] pb-3 text-sm hover:text-[#B89B68]"
+            variant="solid"
+            wrapperClassName="ahsaro-reveal ahsaro-reveal-delay-3"
           >
-            START A PROJECT <span className="text-[#B89B68]">↗</span>
-          </a>
+            START A PROJECT ↗
+          </MagneticButton>
         </div>
 
         <div className="mt-24 grid grid-cols-2 gap-8 border-t border-white/10 pt-6 md:grid-cols-3">
@@ -96,90 +82,114 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services" className="border-t border-white/10 px-6 py-20 md:px-12 md:py-28">
+      <section
+        id="services"
+        className="scroll-mt-20 border-t border-white/10 px-6 py-20 md:px-12 md:py-32"
+      >
         <p className="text-xs tracking-[0.3em] text-[#B89B68]">WHAT WE DO</p>
-        <h2 className="mt-5 max-w-2xl text-4xl font-light md:text-6xl">
-          Thoughtful work.
-          <br />
-          <span className="text-white/40">Measurable purpose.</span>
-        </h2>
+        <RevealLines
+          className="mt-5 max-w-3xl text-4xl font-light leading-[1.1] md:text-7xl"
+          lines={[
+            { text: "Thoughtful work." },
+            { text: "Measurable purpose.", className: "text-white/40" },
+          ]}
+        />
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {[
-            {
-              number: "01",
-              title: "Website Design",
-              description: "Clear layouts and distinctive visual direction for your brand.",
-            },
-            {
-              number: "02",
-              title: "Web Development",
-              description: "Responsive, modern websites designed for real people.",
-            },
-            {
-              number: "03",
-              title: "Website Care",
-              description: "Ongoing improvements, maintenance and support.",
-            },
-          ].map((service) => (
-            <article
-              key={service.number}
-              className="border border-white/10 p-7 transition-colors hover:border-[#B89B68]/60"
-            >
-              <p className="text-xs text-[#B89B68]">{service.number}</p>
-              <h3 className="mt-10 text-xl">{service.title}</h3>
-              <p className="mt-4 text-sm leading-6 text-white/50">
-                {service.description}
-              </p>
-            </article>
+        <div className="mt-16 grid gap-5 md:grid-cols-3">
+          {services.map((service, i) => (
+            <Reveal key={service.number} className="h-full" delay={i * 120}>
+              <article className="h-full border border-white/10 p-7 transition-colors duration-500 hover:border-[#B89B68]/60 hover:bg-[#1B1B19]">
+                <p className="text-xs tracking-widest text-[#B89B68]">
+                  {service.number}
+                </p>
+                <h3 className="mt-14 text-xl">{service.title}</h3>
+                <p className="mt-4 text-sm leading-6 text-white/50">
+                  {service.description}
+                </p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section id="work" className="border-t border-white/10 px-6 py-20 md:px-12 md:py-28">
+      <section
+        id="work"
+        className="scroll-mt-20 border-t border-white/10 px-6 py-20 md:px-12 md:py-32"
+      >
         <p className="text-xs tracking-[0.3em] text-[#B89B68]">SELECTED WORK</p>
-        <h2 className="mt-5 text-4xl font-light md:text-6xl">
-          A preview of what&apos;s possible.
-        </h2>
+        <RevealLines
+          className="mt-5 text-4xl font-light leading-[1.1] md:text-7xl"
+          lines={[{ text: "A preview of" }, { text: "what’s possible." }]}
+        />
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          <article className="flex min-h-64 flex-col justify-between bg-[#1B1B19] p-8">
-            <span className="text-xs tracking-widest text-[#B89B68]">CONCEPT 01</span>
-            <div>
-              <h3 className="text-3xl font-light">The Modern Atelier</h3>
-              <p className="mt-3 text-sm text-white/50">Fashion & lifestyle concept</p>
-            </div>
-          </article>
-          <article className="flex min-h-64 flex-col justify-between bg-[#24211C] p-8">
-            <span className="text-xs tracking-widest text-[#B89B68]">CONCEPT 02</span>
-            <div>
-              <h3 className="text-3xl font-light">Forma Living</h3>
-              <p className="mt-3 text-sm text-white/50">Architecture & interiors concept</p>
-            </div>
-          </article>
+        {/* Broken grid: different sizes, offset and overlapping */}
+        <div className="mt-16 grid gap-5 md:grid-cols-12">
+          <Reveal className="md:col-span-7 md:self-start">
+            <article className="flex min-h-72 flex-col justify-between border border-white/10 bg-[#1B1B19] p-8 transition-colors duration-500 hover:border-[#B89B68]/50 md:min-h-[30rem] md:p-12">
+              <span className="text-xs tracking-widest text-[#B89B68]">
+                CONCEPT 01
+              </span>
+              <div>
+                <h3 className="text-3xl font-light md:text-5xl">
+                  The Modern Atelier
+                </h3>
+                <p className="mt-3 text-sm text-white/50">
+                  Fashion & lifestyle concept
+                </p>
+              </div>
+            </article>
+          </Reveal>
+
+          <div className="relative z-10 md:col-span-5 md:-ml-16 md:mt-40 md:self-start">
+            <Parallax speed={0.08}>
+              <Reveal delay={150}>
+                <article className="flex min-h-64 flex-col justify-between border border-white/10 bg-[#24211C] p-8 transition-colors duration-500 hover:border-[#B89B68]/50 md:min-h-[24rem] md:p-10">
+                  <span className="text-xs tracking-widest text-[#B89B68]">
+                    CONCEPT 02
+                  </span>
+                  <div>
+                    <h3 className="text-3xl font-light md:text-4xl">
+                      Forma Living
+                    </h3>
+                    <p className="mt-3 text-sm text-white/50">
+                      Architecture & interiors concept
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            </Parallax>
+          </div>
         </div>
 
-        <p className="mt-5 text-xs leading-5 text-white/40">
+        <p className="mt-8 text-xs leading-5 text-white/40 md:mt-10">
           These are concept directions, not completed client projects.
         </p>
       </section>
 
-      <section id="about" className="border-t border-white/10 px-6 py-20 md:px-12 md:py-28">
-        <p className="text-xs tracking-[0.3em] text-[#B89B68]">A DIFFERENT APPROACH</p>
+      <section
+        id="about"
+        className="scroll-mt-20 border-t border-white/10 px-6 py-20 md:px-12 md:py-32"
+      >
+        <p className="text-xs tracking-[0.3em] text-[#B89B68]">
+          A DIFFERENT APPROACH
+        </p>
         <div className="mt-6 grid gap-8 md:grid-cols-2">
-          <h2 className="text-4xl font-light leading-tight md:text-6xl">
-            Good digital work
-            <br />
-            should feel
-            <br />
-            <span className="font-serif italic text-[#B89B68]">effortless.</span>
-          </h2>
-          <p className="max-w-lg self-end text-base leading-8 text-white/60">
-            AHSARO is an independent digital studio focused on thoughtful
-            design, purposeful development and details that make a difference.
-            We believe a great website should look considered, work beautifully
-            and make the next step clear.
-          </p>
+          <RevealLines
+            className="text-4xl font-light leading-[1.1] md:text-7xl"
+            lines={[
+              { text: "Good digital work" },
+              { text: "should feel" },
+              { text: "effortless.", className: "ahsaro-accent" },
+            ]}
+          />
+          <Reveal className="self-end" delay={200}>
+            <p className="max-w-lg text-base leading-8 text-white/60">
+              AHSARO is an independent digital studio focused on thoughtful
+              design, purposeful development and details that make a
+              difference. We believe a great website should look considered,
+              work beautifully and make the next step clear.
+            </p>
+          </Reveal>
         </div>
       </section>
 

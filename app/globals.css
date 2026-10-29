@@ -26,7 +26,39 @@ body {
     sans-serif;
 }
 
-/* AHSARO — cinematic editorial motion */
+/* ---------- Scrolling ---------- */
+
+/* Native smooth anchor scrolling (used when Lenis is not active) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Required Lenis styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ---------- Focus ---------- */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* ---------- Keyframes ---------- */
 
 @keyframes ahsaro-fade-up {
   from {
@@ -65,8 +97,9 @@ body {
   }
 }
 
-/* Fade-up reveal (eyebrow, paragraph, CTA).
-   Sequence: eyebrow -> line 1 -> line 2 -> paragraph -> CTA */
+/* ---------- Hero load animation ---------- */
+
+/* Sequence: eyebrow -> line 1 -> line 2 -> paragraph -> CTA */
 .ahsaro-reveal {
   animation: ahsaro-fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -84,8 +117,8 @@ body {
 }
 
 /* Masked headline lines.
-   The small bottom padding / negative margin pair stops descenders
-   and italic overhangs from being clipped without shifting layout. */
+   The bottom padding / negative margin pair stops descenders and
+   italic overhangs from being clipped without shifting layout. */
 .ahsaro-line {
   display: block;
   overflow: hidden;
@@ -106,8 +139,16 @@ body {
   animation-delay: 400ms;
 }
 
-/* Atmospheric gold glow: a plain radial gradient (no blur filter),
-   faint at its peak so text contrast is never affected. */
+/* Serif italic accent words */
+.ahsaro-accent {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.12em;
+  color: var(--gold);
+}
+
+/* Atmospheric gold glow: plain radial gradient, no blur filter */
 .ahsaro-glow {
   background: radial-gradient(
     closest-side,
@@ -120,6 +161,136 @@ body {
   will-change: transform, opacity;
 }
 
+/* ---------- Scroll-triggered reveals ---------- */
+/* Hidden only after JS arms an element that starts below the fold. */
+
+.ahsaro-split {
+  display: block;
+}
+
+[data-armed="true"] .ahsaro-split {
+  transform: translateY(110%);
+}
+
+[data-armed="true"][data-in="true"] .ahsaro-split {
+  transform: none;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms);
+}
+
+.ahsaro-scroll[data-armed="true"] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.ahsaro-scroll[data-armed="true"][data-in="true"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 900ms ease var(--d, 0ms),
+    transform 1100ms cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms);
+}
+
+/* ---------- Nav link underline ---------- */
+
+.ahsaro-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.35rem 0;
+  color: rgba(245, 241, 232, 0.7);
+  transition: color 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ahsaro-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ahsaro-link:hover,
+.ahsaro-link:focus-visible {
+  color: var(--foreground);
+}
+
+.ahsaro-link:hover::after,
+.ahsaro-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Buttons: liquid fill from the pointer's entry point ---------- */
+
+.ahsaro-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 1rem 1.75rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  border: 1px solid transparent;
+  transition:
+    color 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ahsaro-btn-fill {
+  position: absolute;
+  z-index: -1;
+  left: var(--fx, 50%);
+  top: var(--fy, 50%);
+  width: 300%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ahsaro-btn:hover .ahsaro-btn-fill,
+.ahsaro-btn:focus-visible .ahsaro-btn-fill {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Solid: ivory with obsidian text, inverts to obsidian */
+.ahsaro-btn--solid {
+  background: var(--foreground);
+  color: #111111;
+  border-color: var(--foreground);
+}
+.ahsaro-btn--solid .ahsaro-btn-fill {
+  background: #111111;
+}
+.ahsaro-btn--solid:hover,
+.ahsaro-btn--solid:focus-visible {
+  color: var(--foreground);
+}
+
+/* Outline: gold hairline, fills with gold */
+.ahsaro-btn--outline {
+  color: var(--foreground);
+  border-color: rgba(184, 155, 104, 0.6);
+}
+.ahsaro-btn--outline .ahsaro-btn-fill {
+  background: var(--gold);
+}
+.ahsaro-btn--outline:hover,
+.ahsaro-btn--outline:focus-visible {
+  color: #111111;
+  border-color: var(--gold);
+}
+
+/* ---------- Reduced motion ---------- */
+
 @media (prefers-reduced-motion: reduce) {
   .ahsaro-reveal,
   .ahsaro-reveal-delay-1,
@@ -130,5 +301,12 @@ body {
   .ahsaro-line-delay-2,
   .ahsaro-glow {
     animation: none !important;
+  }
+
+  .ahsaro-btn,
+  .ahsaro-btn-fill,
+  .ahsaro-link,
+  .ahsaro-link::after {
+    transition: none !important;
   }
 }
